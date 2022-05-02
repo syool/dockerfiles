@@ -1,19 +1,20 @@
 # to build this dockerfile, run below:
-# nvidia-docker build -t $USER/cuda-py-docker:latest .
+# nvidia-docker build -t $USER/cuda:latest .
 
-# to run the container of this image, run below:
-# nvidia-docker run -ti -h docker-minitorch -v $(pwd):/root/your_dir:rw --name minitorch $USER/cuda-py-docker:latest
-# add --rm if you want kill the container right after exit
-
-FROM nvidia/cuda:11.6.0-devel-ubuntu20.04
-MAINTAINER austin
+FROM nvidia/cuda:11.6.0-cudnn8-devel-ubuntu20.04
+MAINTAINER austinhyun
 
 # install preliminaries
-RUN apt update && apt upgrade -y
-RUN apt install git curl zsh python3 python3-pip -y
+RUN apt-get update && apt upgrade -y
+RUN apt-get install git curl wget zip cmake zsh python3 python3-pip -y
 
-# install monitoring tools
-RUN pip3 install bpytop gpustat
+# install PyTorch for Nvidia GeForce RTX30 series
+RUN pip3 install torch==1.10.2+cu111 torchvision==0.11.3+cu111 \
+    -f https://download.pytorch.org/whl/torch_stable.html
+
+# install dependencies
+RUN pip3 install scikit-learn opencv-python \
+    matplotlib plotly tqdm
 
 # install oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -41,6 +42,6 @@ RUN echo "fpath+=$HOME/.zsh-theme/pure\n \
 #     echo ". ~/miniconda3/etc/profile.d/conda.sh\n \
 #           conda activate base" >> ~/.zshrc
 
-WORKDIR /root/your_dir
+WORKDIR /root
 
 CMD [ "/bin/zsh" ]
