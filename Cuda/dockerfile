@@ -1,6 +1,7 @@
 # to build this dockerfile, run below:
 # nvidia-docker build -t $USER/cuda:latest .
 
+# for other distros, go to https://hub.docker.com/r/nvidia/cuda
 FROM nvidia/cuda:11.6.0-cudnn8-devel-ubuntu20.04
 MAINTAINER austinhyun
 
