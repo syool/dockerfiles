@@ -24,16 +24,21 @@ RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master
 # install zsh theme "pure"
 RUN mkdir -p "$HOME/.zsh-theme"
 RUN git clone https://github.com/sindresorhus/pure.git "$HOME/.zsh-theme/pure"
-RUN echo "fpath+=$HOME/.zsh-theme/pure\n \
-          autoload -U promptinit; promptinit\n \
-          zstyle :prompt:pure:git:stash show yes\n \
-          zstyle :prompt:pure:path color '#40826d'\n \
-          zstyle :prompt:pure:prompt:success color '#01DF01'\n \
-          zstyle :prompt:pure:virtualenv color '#11a3a2'\n \
-          zstyle :prompt:pure:git:branch color '#808080'\n \
-          zstyle :prompt:pure:user color 'ffc100'\n \
-          zstyle :prompt:pure:host color 'ffc100'\n \
-          prompt pure" >> ~/.zshrc
+RUN echo "export ZSH=\"$HOME/.oh-my-zsh\"\n\
+fpath+=$HOME/.zsh-theme/pure\n\
+autoload -U promptinit; promptinit\n\
+zstyle :prompt:pure:git:stash show yes\n\
+zstyle :prompt:pure:path color '#40826d'\n\
+zstyle :prompt:pure:prompt:success color '#01DF01'\n\
+zstyle :prompt:pure:virtualenv color '#11a3a2'\n\
+zstyle :prompt:pure:git:branch color '#808080'\n\
+zstyle :prompt:pure:user color 'ffc100'\n\
+zstyle :prompt:pure:host color 'ffc100'\n\
+prompt pure\n\
+plugins=(\n\
+	git\n\
+)\n\
+source \$ZSH/oh-my-zsh.sh" > ~/.zshrc
 
 # install miniconda3
 # RUN sh -c "$(curl -o ~/miniconda3.sh https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh)"
