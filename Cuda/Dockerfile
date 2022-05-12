@@ -5,10 +5,13 @@
 FROM nvidia/cuda:11.6.0-cudnn8-devel-ubuntu20.04
 MAINTAINER austinhyun
 
+# non-interactive installation of gdb
+RUN export DEBIAN_FRONTEND=noninteractive
+RUN ln -fs /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+
 # install preliminaries
-# optional: gdb
 RUN apt-get update && apt-get upgrade -y
-RUN apt-get install git curl wget zip zsh micro python3 python3-pip -y
+RUN apt-get install git curl wget zip zsh micro gdb python3 python3-pip -y
 
 # install PyTorch for Nvidia GeForce RTX30 series
 RUN pip3 install torch==1.10.2+cu111 torchvision==0.11.3+cu111 \
