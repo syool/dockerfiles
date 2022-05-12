@@ -19,7 +19,7 @@ RUN pip3 install torch==1.10.2+cu111 torchvision==0.11.3+cu111 \
 
 # install dependencies
 RUN pip3 install scikit-learn opencv-python \
-    matplotlib plotly tqdm
+    matplotlib plotly tqdm ipykernel
 
 # install oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
