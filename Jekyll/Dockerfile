@@ -2,7 +2,7 @@
 
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y ruby-full build-essential zlib1g-dev \
+RUN apt-get update && apt-get install -y ruby-full build-essential zlib1g-dev git \
 	&& rm -rf /var/lib/dpkg
 
 RUN groupadd -g 1000 jekyll && useradd -g 1000 -m -u 1000 jekyll && mkdir /src /opt/gems && chown jekyll:jekyll /opt/gems
