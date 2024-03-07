@@ -12,9 +12,6 @@ LABEL author="syool"
 RUN apt update && apt upgrade -y
 RUN apt install git curl zsh python3 python3-pip cmake -y
 
-# install monitoring tools
-RUN pip3 install bpytop
-
 # install oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 
