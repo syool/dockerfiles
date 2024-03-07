@@ -1,8 +1,8 @@
 # to build this dockerfile, run below:
-# docker build -t $USER/go-docker:latest .
+# docker build -t $USER/gcc:latest .
 
 # to run the container of this image, run below:
-# docker run -ti -h docker-minitorch -v $(pwd):/root/your_dir:rw --name minitorch $USER/go-docker:latest
+# docker run -ti -v $(pwd):/root/your_dir:rw --name minitorch $USER/gcc:latest
 # add --rm if you want kill the container right after exit
 
 FROM gcc:latest
@@ -10,7 +10,7 @@ LABEL author="syool"
 
 # install preliminaries
 RUN apt update && apt upgrade -y
-RUN apt install git curl zsh python3 python3-pip -y
+RUN apt install git curl zsh python3 python3-pip cmake -y
 
 # install monitoring tools
 RUN pip3 install bpytop
