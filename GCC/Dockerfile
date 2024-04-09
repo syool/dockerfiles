@@ -2,7 +2,7 @@
 # docker build -t $USER/gcc:latest .
 
 # to run the container of this image, run below:
-# docker run -ti -v $(pwd):/root/your_dir:rw --name minitorch $USER/gcc:latest
+# docker run -ti -v $(pwd):/root/your_dir:rw $USER/gcc:latest
 # add --rm if you want kill the container right after exit
 
 FROM gcc:latest
@@ -10,7 +10,7 @@ LABEL author="syool"
 
 # install preliminaries
 RUN apt update && apt upgrade -y
-RUN apt install git curl zsh python3 python3-pip cmake -y
+RUN apt install git curl zsh python3 python3-pip lldb cmake -y
 
 # install oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
@@ -68,6 +68,6 @@ source \$ZSH/oh-my-zsh.sh" > ~/.zshrc
 RUN mkdir -p ~/.config/micro
 RUN echo "{\"colorscheme\": \"bubblegum\"}" > ~/.config/micro/settings.json
 
-WORKDIR /root/your_dir
+WORKDIR /root
 
 CMD [ "/bin/zsh" ]
