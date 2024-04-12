@@ -1,16 +1,32 @@
 # to build this dockerfile, run below:
-# docker build -t $USER/gcc:latest .
+# docker build -t $USER/llvm:latest .
 
-# to run the container of this image, run below:
-# docker run -ti -v $PWD:/root/your_dir:rw $USER/gcc:latest
-# add --rm if you want kill the container right after exit
+# to run a container of this image, run below:
+# docker run -ti -v $PWD:/root/directory/:rw $USER/llvm:latest
+# add --rm if you want to create an instant container
 
-FROM gcc:latest
+FROM ubuntu:22.04
 LABEL author="syool"
 
 # install preliminaries
 RUN apt update && apt upgrade -y
-RUN apt install git curl zsh python3 python3-pip micro gdb cmake -y
+RUN apt install git curl wget zsh python3 python3-pip micro cmake -y
+
+# install add-apt-repository tool
+RUN apt install software-properties-common -y
+
+# add llvm repositories
+# for more details, visit apt.llvm.org
+RUN add-apt-repository "deb http://apt.llvm.org/jammy/ llvm-toolchain-jammy main"
+RUN add-apt-repository "deb-src http://apt.llvm.org/jammy/ llvm-toolchain-jammy main"
+
+# install llvm, clang, and lldb debugger
+# for more details, visit apt.llvm.org
+RUN wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | apt-key add -
+RUN apt install clang-format clang-tidy clang-tools clang clangd libc++-dev libc++1 libc++abi-dev libc++abi1 libclang-dev libclang1 liblldb-dev libllvm-ocaml-dev libomp-dev libomp5 lld lldb llvm-dev llvm-runtime llvm python3-clang -y
+
+# install llvm machine interface driver
+RUN git clone https://github.com/lldb-tools/lldb-mi.git "$HOME/lldb-mi"
 
 # install oh-my-zsh
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
